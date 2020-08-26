@@ -3,6 +3,7 @@ import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 
 import './Registration.css'
+import RegistrationAlert from './RegistrationAlert';
 
 class Registration extends Component {
 
@@ -16,6 +17,7 @@ class Registration extends Component {
         password: '',
       }
     };
+    this.registrationAlert = React.createRef();
   }
   
   handleChange = (event) => {
@@ -55,7 +57,7 @@ class Registration extends Component {
     
   }
 
-  registerUser(username, password) {
+  registerUser = (username, password) => {
     fetch('http://localhost:8080/users', {
             method: 'POST',
             headers: {
@@ -68,18 +70,21 @@ class Registration extends Component {
             })
           }).then(function(response) {
             if (response.status === 200) {
-              console.log("User registered!");
+              this.registrationAlert.current.showRegistrationAlert("success", "User registered!", "You can now login.");
+            } else if (response.status === 422) {
+              this.registrationAlert.current.showRegistrationAlert("danger", "User not registered!", "User with this username already exist");
             } else {
-              console.log("User not registered!");
+              this.registrationAlert.current.showRegistrationAlert("danger", "User not registered!", "Something went wrong.");
             }
-          }).catch(function(error){
-            console.log("Error!");
-          });  
+          }.bind(this)).catch(function(error){
+            this.registrationAlert.current.showRegistrationAlert("danger", "Error", "Something went wrong.");
+          }.bind(this));  
   }
 
   render() {
     const {errors} = this.state;
     return (
+      <>
       <div className="Register">
         <Form onSubmit={this.handleSubmit}>
           <div className='username'>
@@ -103,6 +108,8 @@ class Registration extends Component {
           </div>
         </Form>
       </div>
+      <RegistrationAlert ref={this.registrationAlert}/>
+      </>
     );
   }
 }
