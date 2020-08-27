@@ -1,0 +1,21 @@
+    .login-form {
+        margin: 0 auto;
+        padding: 60px 0;
+        max-width: 320 px;
+        width: 100%;
+    }
+  
+    .error {
+        color: crimson;
+        font-size: 70%;
+        vertical-align: top;
+    }
+
+    .text-register {
+        font-size: 70%;
+    }
+
+    label {
+        float: left;
+        font-size: 80%;
+    }
