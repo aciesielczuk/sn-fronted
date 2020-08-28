@@ -85,6 +85,7 @@ class Registration extends Component {
     const {errors} = this.state;
     return (
       <>
+      <p>Create new account</p>
       <div className="Register">
         <Form onSubmit={this.handleSubmit}>
           <div className='username'>
