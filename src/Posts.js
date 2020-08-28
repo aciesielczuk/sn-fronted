@@ -6,20 +6,25 @@ export default function Posts() {
     const [isLoaded, setIsLoaded] = useState(false);
 
     useEffect(() => {
-        fetch("http://localhost:8080/posts")
-          .then(res => res.json())
-          .then(
-            (result) => {
-              setIsLoaded(true);
-              setPosts(result);
-            },
-            (error) => {
-              setIsLoaded(true);
-              setError(error);
+        fetch("http://localhost:8080/posts", {
+            method: 'GET',
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json',
+               'x-authorization-token': window.localStorage.getItem('token')
             }
-          )
-      }, []);
-
+            }).then(res => res.json())
+            .then(
+                (result) => {
+                setIsLoaded(true);
+                setPosts(result);
+                },
+                (error) => {
+                setIsLoaded(true);
+                setError(error);
+                }
+            )
+            }, []);
 
       if (error) {
         return <div>Error: {error.message}</div>;
