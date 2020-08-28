@@ -68,17 +68,19 @@ class Registration extends Component {
               username: username,
               password: password,
             })
-          }).then(function(response) {
-            if (response.status === 200) {
+          }).then(res => res.json())
+            .then(response => {
+            if (response.token) {
+              window.localStorage.setItem('token', response.token);
               this.registrationAlert.current.showRegistrationAlert("success", "User registered!", "You can now login.");
             } else if (response.status === 422) {
               this.registrationAlert.current.showRegistrationAlert("danger", "User not registered!", "User with this username already exist");
             } else {
               this.registrationAlert.current.showRegistrationAlert("danger", "User not registered!", "Something went wrong.");
             }
-          }.bind(this)).catch(function(error){
+          }).catch(error => {
             this.registrationAlert.current.showRegistrationAlert("danger", "Error", "Something went wrong.");
-          }.bind(this));  
+          });  
   }
 
   render() {

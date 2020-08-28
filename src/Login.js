@@ -24,7 +24,7 @@ export default function Login() {
             })
           }).then(function(response) {
             if (response.status === 200) {
-              console.log("You have logged in");
+              window.localStorage.setItem('token', response.body);
               history.push("/posts");
             } else if (response.status === 401) {
                 console.log("Wrong username or password");
