@@ -1,17 +1,17 @@
-import React, {Component} from 'react';
+import React from 'react'
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
+import {Link,
+        useHistory
+} from "react-router-dom"
 
 import './Login.css'
 
-class Login extends Component {
+export default function Login() {
 
-  handleSubmit = event => {
-    event.preventDefault();
-    this.loginUser(event.target.username.value, event.target.password.value);
-  }
+  let history = useHistory();
 
-  loginUser = (username, password) => {
+  let loginUser = (username, password) => {
     fetch('http://localhost:8080/login', {
             method: 'POST',
             headers: {
@@ -25,29 +25,29 @@ class Login extends Component {
           }).then(function(response) {
             if (response.status === 200) {
               console.log("You have logged in");
+              history.push("/posts");
             } else if (response.status === 401) {
                 console.log("Wrong username or password");
             } else {
                 console.log("Something went wrong.");
             }
           }).catch(function(error){
-            console.log("Error", "Something went wrong.");
+            console.log(error);
           });  
   }
 
-  registerMethod = event => {
+  let handleSubmit = event => {
     event.preventDefault();
-    console.log("Siema");
-  } 
+    loginUser(event.target.username.value, event.target.password.value);
+  }
 
-  render() {
     return (
       <>
       <div className="login">
           <h3>
               <span className="font-weight-bold">social-network.herokuapp</span>.com
           </h3>
-        <Form className="login-form" onSubmit={this.handleSubmit}>
+        <Form className="login-form" onSubmit={handleSubmit}>
           <div className='username'>
             <Form.Group controlId="username">
               <Form.Label>Username</Form.Label>
@@ -64,14 +64,11 @@ class Login extends Component {
           <div className="text-register text-center pt-3">
               Don't have an account? Sign up.
           </div>
-            <Button className="btn btn-success btn-block mt-3 mb-3" onClick={this.registerMethod}>
-              Register
+            <Button className="btn btn-success btn-block mt-3 mb-3">
+              <Link to="/register">Register</Link>
             </Button>
         </Form>
       </div>
       </>
     );
   }
-}
-
-export default Login;
