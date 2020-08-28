@@ -1,15 +1,36 @@
-import React, {Component} from 'react';
+import React from 'react';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route
+} from "react-router-dom";
 import Login from './Login.js';
+import Registration from './Registration.js';
+import Posts from './Posts.js';
+
 import './App.css';
 
-class App extends Component {
-  render() {
-   return <div className="App">
-      <header className="App-header">
-        <Login/>
-      </header>
-    </div>
-  }
+export default function App() {
+  return (
+    <Router>
+      <div className="App">
+        <header className="App-header">
+        <Switch>
+          <Route path="/login">
+            <Login />
+          </Route>
+          <Route path="/register">
+            <Registration />
+          </Route>
+          <Route path="/posts">
+            <Posts />
+          </Route>
+          <Route path="/">
+            <Login />
+          </Route>
+        </Switch>
+        </header>
+      </div>
+    </Router>
+  );
 }
-
-export default App;
