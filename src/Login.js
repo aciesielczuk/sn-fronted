@@ -1,15 +1,11 @@
 import React from 'react'
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
-import {Link,
-        useHistory
-} from "react-router-dom"
+import {Link} from "react-router-dom"
 
 import './Login.css'
 
 export default function Login() {
-
-  let history = useHistory();
 
   let loginUser = (username, password) => {
     fetch('http://localhost:8080/login', {
@@ -26,7 +22,7 @@ export default function Login() {
             .then(response => {
             if (response.token) {
               window.localStorage.setItem('token', response.token);
-              history.push("/posts");
+              window.location = '/posts';
             } else if (response.status === 401) {
                 console.log("Wrong username or password");
             } else {
