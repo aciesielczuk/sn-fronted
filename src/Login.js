@@ -22,9 +22,10 @@ export default function Login() {
               username: username,
               password: password,
             })
-          }).then(function(response) {
-            if (response.status === 200) {
-              window.localStorage.setItem('token', response.body);
+          }).then(res => res.json())
+            .then(response => {
+            if (response.token) {
+              window.localStorage.setItem('token', response.token);
               history.push("/posts");
             } else if (response.status === 401) {
                 console.log("Wrong username or password");
