@@ -12,16 +12,18 @@ import './App.css';
 
 export default function App() {
   let token = window.localStorage.getItem("token");
+  let username = window.localStorage.getItem("username");
   let logout = event => {
     event.preventDefault();
     window.localStorage.removeItem("token");
+    window.localStorage.removeItem("username");
     window.location = "/login";
   }
   return (
     <Router>
       <div className="App">
         <header className="App-header">         
-          {token && <div><span>Zalogowany jako {}</span><a href={"#"} onClick={logout}>Wyloguj się</a></div>}     
+          {token && <div><span>Hello! {username} </span><a href={"/#"} onClick={logout}>Log out</a></div>}     
         <Switch>
           <Route path="/login">
             <Login />

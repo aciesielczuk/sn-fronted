@@ -22,6 +22,7 @@ export default function Login() {
             .then(response => {
             if (response.token) {
               window.localStorage.setItem('token', response.token);
+              window.localStorage.setItem('username', username);
               window.location = '/posts';
             } else if (response.status === 401) {
                 console.log("Wrong username or password");

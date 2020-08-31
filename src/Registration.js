@@ -72,6 +72,7 @@ class Registration extends Component {
             .then(response => {
             if (response.token) {
               window.localStorage.setItem('token', response.token);
+              window.localStorage.setItem('username', username);
               this.registrationAlert.current.showRegistrationAlert("success", "User registered!", "You can now login.");
               window.location = '/posts';
             } else if (response.status === 422) {
