@@ -32,6 +32,7 @@ export default function Posts() {
     let handleSubmit = event => {
       event.preventDefault();
       addPost(event.target.postBody.value);
+      event.target.postBody.value = "";
     } 
 
     useEffect(() => {
@@ -62,44 +63,39 @@ export default function Posts() {
       } else {
         return (
           <>
-          <div classname="container">
-            <div className="col">
-          <Form onSubmit={handleSubmit}>
-          <div className="text-area">
-            <Form.Group controlId="postBody">
-              <Form.Label>Example textarea</Form.Label>
-              <Form.Control as="textarea" name="postBody" rows="3"  />
-            </Form.Group>
-          </div>
-            <div className='submit'>
-              <Button type="submit">Add Post</Button>
+          <div className="center-screen">
+            <div className="add-post">
+              <Form onSubmit={handleSubmit}>
+                <div className="text-area">
+                  <Form.Group controlId="postBody">
+                    <Form.Label>Write something</Form.Label>
+                    <Form.Control as="textarea" name="postBody" rows="4"  />
+                  </Form.Group>
+                </div>
+                  <Button type="submit" className="submit">
+                    Add Post
+                  </Button>
+              </Form>
             </div>
-          </Form>
-          </div>
-          <ul>
-            {posts.map(p => (
-              <div className="col">
-              <Card
-                border='primary'
-                key={p.id}
-                style={{ width: '50%', margin: '30px' }}
-                className="card"
-              >
-              <Card.Body className="card-body text-left">
-                <Card.Title className="card-title text-left">
-                  {p.user.username}
-                </Card.Title>
-                  <Card.Text>
-                    {p.postBody}
-                  </Card.Text>
-                <Card.Link href="#">Like</Card.Link>
-                <Card.Link href="#">Add Comment</Card.Link>
-                <Card.Link href="#">Share</Card.Link>
-              </Card.Body>
-              </Card> 
-              </div>           
-            ))}
-          </ul>
+            <ul>
+              {posts.map(p => (
+                <div className="col" key={p.id}>
+                <Card className="card" border='primary'>
+                <Card.Body className="card-body text-left">
+                  <Card.Title className="card-title text-left">
+                    {p.user.username}
+                  </Card.Title>
+                    <Card.Text>
+                      {p.postBody}
+                    </Card.Text>
+                  <Card.Link href="/#">Like</Card.Link>
+                  <Card.Link href="/#">Add Comment</Card.Link>
+                  <Card.Link href="/#">Share</Card.Link>
+                </Card.Body>
+                </Card> 
+                </div>           
+              ))}
+            </ul>
           </div>
           </>
         );
