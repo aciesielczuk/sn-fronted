@@ -11,9 +11,10 @@ export default function Posts() {
     const [error, setError] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
 
-    let token = window.localStorage.getItem("token");
+    const token = window.localStorage.getItem("token");
+    const userId = window.localStorage.getItem("userId");
 
-    let addPost = (postBody) => {
+    const addPost = (postBody) => {
       fetch('http://localhost:8080/posts', {
             method: 'POST',
             headers: {
@@ -30,13 +31,13 @@ export default function Posts() {
           });  
     }
 
-    let handleSubmit = event => {
+    const handleSubmit = event => {
       event.preventDefault();
       addPost(event.target.postBody.value);
       event.target.postBody.value = "";
     }
 
-    let likePost = (postId) => {
+    const likePost = (postId) => {
       fetch('http://localhost:8080/likes', {
             method: 'POST',
             headers: {
@@ -47,12 +48,15 @@ export default function Posts() {
             }
           }).then(res => res.json())
             .then(response => {
-              setPosts([...posts, response.post]);
-              console.log(posts);
+              let postIndex = posts.findIndex((post) => post.id === response.post.id);
+              setPosts((prevPosts) => {
+              prevPosts[postIndex] = {...prevPosts[postIndex], ...response.post}
+              return [...prevPosts];
+            })
           });  
     }
 
-    let dislikePost = (postId) => {
+    const unlikePost = (postId) => {
       fetch('http://localhost:8080/likes', {
             method: 'DELETE',
             headers: {
@@ -61,14 +65,29 @@ export default function Posts() {
               'x-authorization-token': token,
               'postId': postId,
             }
-          }).then(res => res.json())
-            .then(response => {
-              setPosts([...posts, response.post]);
-              console.log(posts);
-          });  
+          }).then(() => {
+            let items = [...posts];
+            let postIndex = posts.findIndex((post) => post.id === postId);
+            let item = {...items[postIndex]};
+            let likeIndex = item.likes.findIndex((like) => like.user.id == userId);
+            item.likes.splice(likeIndex, 1);
+            setPosts((prevPosts) => {
+            prevPosts[postIndex] = {...prevPosts[postIndex], ...item}
+            return [...prevPosts];
+          })
+        });  
     }
 
-    let handleLike = (event) => {
+    const isLiked = (post) => {
+      const likeIndex = post.likes.findIndex((like) => like.user.id == userId);;
+      if (likeIndex != -1) {
+        const like = post.likes[likeIndex];
+        return true;
+      }
+      return false;
+    }
+
+    const handleLike = (event) => {
       event.preventDefault();
       likePost(event.currentTarget.dataset.id);
     } 
@@ -116,9 +135,9 @@ export default function Posts() {
               </Form>
             </div>
             <ul>
-              {posts.map(p => (
-              <div>
-                <Card className="card" key={p.id} border='primary'>
+              {posts.slice().reverse().map(p => (
+              <div key={p.id}>
+                <Card className="card" border='primary'>
                 <Card.Body className="card-body text-left">
                   <Card.Title className="card-title text-left">
                     {p.user.username}
@@ -126,9 +145,13 @@ export default function Posts() {
                   <Card.Text>
                     {p.postBody}
                   </Card.Text>
-                  <Button variant="primary" data-id={p.id} onClick={handleLike}> 
-                    Like/Dislike <Badge variant="light">{p.likes}</Badge>
-                  </Button>
+                  {isLiked(p)?<Button variant="danger" data-id={p.id} onClick={() => unlikePost(p.id)}> 
+                      Unlike <Badge variant="light">{p.likes.length}</Badge>
+                    </Button>:
+                    <Button variant="primary" data-id={p.id} onClick={handleLike}> 
+                      Like <Badge variant="light">{p.likes.length}</Badge>
+                    </Button>
+                  }
                   <Card.Link href="/#">&nbsp; Add Comment</Card.Link>
                   <Card.Link href="/#">Share</Card.Link>
                 </Card.Body>
