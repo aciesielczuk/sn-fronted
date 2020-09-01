@@ -16,6 +16,7 @@ export default function App() {
   let logout = event => {
     event.preventDefault();
     window.localStorage.removeItem("token");
+    window.localStorage.removeItem("userId");
     window.localStorage.removeItem("username");
     window.location = "/login";
   }
