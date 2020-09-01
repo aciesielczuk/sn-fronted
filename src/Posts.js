@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Form from 'react-bootstrap/Form'
 import Card from 'react-bootstrap/Card'
 import Button from 'react-bootstrap/Button'
+import Badge from 'react-bootstrap/Badge'
 
 import './Posts.css'
 
@@ -33,6 +34,43 @@ export default function Posts() {
       event.preventDefault();
       addPost(event.target.postBody.value);
       event.target.postBody.value = "";
+    }
+
+    let likePost = (postId) => {
+      fetch('http://localhost:8080/likes', {
+            method: 'POST',
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json',
+              'x-authorization-token': token,
+              'postId': postId,
+            }
+          }).then(res => res.json())
+            .then(response => {
+              setPosts([...posts, response.post]);
+              console.log(posts);
+          });  
+    }
+
+    let dislikePost = (postId) => {
+      fetch('http://localhost:8080/likes', {
+            method: 'DELETE',
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json',
+              'x-authorization-token': token,
+              'postId': postId,
+            }
+          }).then(res => res.json())
+            .then(response => {
+              setPosts([...posts, response.post]);
+              console.log(posts);
+          });  
+    }
+
+    let handleLike = (event) => {
+      event.preventDefault();
+      likePost(event.currentTarget.dataset.id);
     } 
 
     useEffect(() => {
@@ -79,21 +117,23 @@ export default function Posts() {
             </div>
             <ul>
               {posts.map(p => (
-                <div className="col" key={p.id}>
-                <Card className="card" border='primary'>
+              <div>
+                <Card className="card" key={p.id} border='primary'>
                 <Card.Body className="card-body text-left">
                   <Card.Title className="card-title text-left">
                     {p.user.username}
                   </Card.Title>
-                    <Card.Text>
-                      {p.postBody}
-                    </Card.Text>
-                  <Card.Link href="/#">Like</Card.Link>
-                  <Card.Link href="/#">Add Comment</Card.Link>
+                  <Card.Text>
+                    {p.postBody}
+                  </Card.Text>
+                  <Button variant="primary" data-id={p.id} onClick={handleLike}> 
+                    Like/Dislike <Badge variant="light">{p.likes}</Badge>
+                  </Button>
+                  <Card.Link href="/#">&nbsp; Add Comment</Card.Link>
                   <Card.Link href="/#">Share</Card.Link>
                 </Card.Body>
                 </Card> 
-                </div>           
+              </div>
               ))}
             </ul>
           </div>
