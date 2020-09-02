@@ -79,9 +79,9 @@ export default function Posts() {
     }
 
     const isLiked = (post) => {
+      if (post.likes == null) return false;
       const likeIndex = post.likes.findIndex((like) => like.user.id == userId);;
       if (likeIndex != -1) {
-        const like = post.likes[likeIndex];
         return true;
       }
       return false;
@@ -146,10 +146,10 @@ export default function Posts() {
                     {p.postBody}
                   </Card.Text>
                   {isLiked(p)?<Button variant="danger" data-id={p.id} onClick={() => unlikePost(p.id)}> 
-                      Unlike <Badge variant="light">{p.likes.length}</Badge>
+                      Unlike <Badge variant="light">{p.likes==null?0:p.likes.length}</Badge>
                     </Button>:
                     <Button variant="primary" data-id={p.id} onClick={handleLike}> 
-                      Like <Badge variant="light">{p.likes.length}</Badge>
+                      Like <Badge variant="light">{p.likes==null?0:p.likes.length}</Badge>
                     </Button>
                   }
                   <Card.Link href="/#">&nbsp; Add Comment</Card.Link>
