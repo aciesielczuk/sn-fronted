@@ -14,11 +14,9 @@
 }
 
 .card {
-    margin: auto;
-    margin-bottom: 20px;
-    margin-top: 20px;
-    padding: 10px;
-    max-width: 70%;
+    margin-bottom: 15px;
+    margin-top: 15px;
+    padding: 5px;
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
     transition: 0.3s;
     border-radius: 10px; /* 5px rounded corners */
@@ -28,15 +26,7 @@
 
   .text-area {
       margin: 0 auto;
-      max-width: 60%;
-  }
-
-  .add-post {
-    display: block;
-    margin: 0 auto;
-    max-width: 800px;
-    margin-top: 30px;
-    margin-bottom: 30px;
+      max-width: 100%;
   }
 
   .container {

@@ -121,7 +121,7 @@ export default function Posts() {
         return (
           <>
           <div className="center-screen">
-            <div className="add-post">
+            <div className="container">
               <Form onSubmit={handleSubmit}>
                 <div className="text-area">
                   <Form.Group controlId="postBody">
@@ -134,7 +134,7 @@ export default function Posts() {
                   </Button>
               </Form>
             </div>
-            <ul>
+            <div>
               {posts.slice().reverse().map(p => (
               <div key={p.id}>
                 <div class="container">
@@ -160,7 +160,7 @@ export default function Posts() {
                 </div>
               </div>
               ))}
-            </ul>
+            </div>
           </div>
           </>
         );
