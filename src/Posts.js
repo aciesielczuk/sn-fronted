@@ -139,7 +139,7 @@ export default function Posts() {
               <div key={p.id}>
                 <div class="container">
                 <Card className="card" border='primary'>
-                <Card.Body className="card-body text-left">
+                <Card.Body className="card-body">
                   <Card.Title className="card-title text-left">
                     {p.user.username}
                   </Card.Title>
