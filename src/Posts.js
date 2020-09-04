@@ -137,6 +137,7 @@ export default function Posts() {
             <ul>
               {posts.slice().reverse().map(p => (
               <div key={p.id}>
+                <div class="container">
                 <Card className="card" border='primary'>
                 <Card.Body className="card-body text-left">
                   <Card.Title className="card-title text-left">
@@ -156,6 +157,7 @@ export default function Posts() {
                   <Card.Link href="/#">Share</Card.Link>
                 </Card.Body>
                 </Card> 
+                </div>
               </div>
               ))}
             </ul>
