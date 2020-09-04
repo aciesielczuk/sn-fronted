@@ -8,7 +8,7 @@ import './Login.css'
 export default function Login() {
 
   let loginUser = (username, password) => {
-    fetch('http://localhost:8080/login', {
+    fetch(process.env.REACT_APP_API + '/login', {
             method: 'POST',
             headers: {
               'Accept': 'application/json',
@@ -44,7 +44,7 @@ export default function Login() {
       <>
       <div className="login">
           <h3>
-              <span className="font-weight-bold">social-network.herokuapp</span>.com
+              <span className="font-weight-bold">snetwork-app.herokuapp</span>.com
           </h3>
         <Form className="login-form" onSubmit={handleSubmit}>
           <div className='username'>

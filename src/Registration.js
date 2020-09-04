@@ -58,7 +58,7 @@ class Registration extends Component {
   }
 
   registerUser = (username, password) => {
-    fetch('http://localhost:8080/registration', {
+    fetch(process.env.REACT_APP_API + '/registration', {
             method: 'POST',
             headers: {
               'Accept': 'application/json',

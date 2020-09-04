@@ -15,7 +15,7 @@ export default function Posts() {
     const userId = window.localStorage.getItem("userId");
 
     const addPost = (postBody) => {
-      fetch('http://localhost:8080/posts', {
+      fetch(process.env.REACT_APP_API + '/posts', {
             method: 'POST',
             headers: {
               'Accept': 'application/json',
@@ -38,7 +38,7 @@ export default function Posts() {
     }
 
     const likePost = (postId) => {
-      fetch('http://localhost:8080/likes', {
+      fetch(process.env.REACT_APP_API + '/likes', {
             method: 'POST',
             headers: {
               'Accept': 'application/json',
@@ -57,7 +57,7 @@ export default function Posts() {
     }
 
     const unlikePost = (postId) => {
-      fetch('http://localhost:8080/likes', {
+      fetch(process.env.REACT_APP_API + '/likes', {
             method: 'DELETE',
             headers: {
               'Accept': 'application/json',
@@ -93,7 +93,7 @@ export default function Posts() {
     } 
 
     useEffect(() => {
-        fetch("http://localhost:8080/posts", {
+        fetch(process.env.REACT_APP_API + "/posts", {
             method: 'GET',
             headers: {
               'Accept': 'application/json',
