@@ -48,8 +48,6 @@ class Registration extends Component {
     event.preventDefault();
     if(validateForm(this.state.errors)) {
       console.info('Valid Form')
-      console.log(event.target.username.value);
-      console.log(event.target.password.value);
       this.registerUser(event.target.username.value, event.target.password.value);
     }else{
       console.error('Invalid Form')
