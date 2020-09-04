@@ -80,7 +80,7 @@ export default function Posts() {
 
     const isLiked = (post) => {
       if (post.likes == null) return false;
-      const likeIndex = post.likes.findIndex((like) => like.user.id == userId);;
+      const likeIndex = post.likes.findIndex((like) => like.user.id == userId);
       if (likeIndex != -1) {
         return true;
       }
