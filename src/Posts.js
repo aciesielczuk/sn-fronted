@@ -15,7 +15,7 @@ export default function Posts() {
     const userId = window.localStorage.getItem("userId");
 
     const addPost = (postBody) => {
-      fetch('http://localhost:8080/posts', {
+      fetch(process.env.REACT_APP_API + '/posts', {
             method: 'POST',
             headers: {
               'Accept': 'application/json',
@@ -38,7 +38,7 @@ export default function Posts() {
     }
 
     const likePost = (postId) => {
-      fetch('http://localhost:8080/likes', {
+      fetch(process.env.REACT_APP_API + '/likes', {
             method: 'POST',
             headers: {
               'Accept': 'application/json',
@@ -57,7 +57,7 @@ export default function Posts() {
     }
 
     const unlikePost = (postId) => {
-      fetch('http://localhost:8080/likes', {
+      fetch(process.env.REACT_APP_API + '/likes', {
             method: 'DELETE',
             headers: {
               'Accept': 'application/json',
@@ -80,7 +80,7 @@ export default function Posts() {
 
     const isLiked = (post) => {
       if (post.likes == null) return false;
-      const likeIndex = post.likes.findIndex((like) => like.user.id == userId);;
+      const likeIndex = post.likes.findIndex((like) => like.user.id == userId);
       if (likeIndex != -1) {
         return true;
       }
@@ -93,7 +93,7 @@ export default function Posts() {
     } 
 
     useEffect(() => {
-        fetch("http://localhost:8080/posts", {
+        fetch(process.env.REACT_APP_API + "/posts", {
             method: 'GET',
             headers: {
               'Accept': 'application/json',
@@ -121,7 +121,7 @@ export default function Posts() {
         return (
           <>
           <div className="center-screen">
-            <div className="add-post">
+            <div className="container">
               <Form onSubmit={handleSubmit}>
                 <div className="text-area">
                   <Form.Group controlId="postBody">
@@ -134,12 +134,12 @@ export default function Posts() {
                   </Button>
               </Form>
             </div>
-            <ul>
+            <div>
               {posts.slice().reverse().map(p => (
               <div key={p.id}>
                 <div className="container">
                 <Card className="card" border='primary'>
-                <Card.Body className="card-body text-left">
+                <Card.Body className="card-body">
                   <Card.Title className="card-title text-left">
                     {p.user.username}
                   </Card.Title>
@@ -160,7 +160,7 @@ export default function Posts() {
                 </div>
               </div>
               ))}
-            </ul>
+            </div>
           </div>
           </>
         );
