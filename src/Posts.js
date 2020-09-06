@@ -137,7 +137,7 @@ export default function Posts() {
             <ul>
               {posts.slice().reverse().map(p => (
               <div key={p.id}>
-                <div class="container">
+                <div className="container">
                 <Card className="card" border='primary'>
                 <Card.Body className="card-body text-left">
                   <Card.Title className="card-title text-left">
