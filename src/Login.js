@@ -1,7 +1,6 @@
 import React from 'react'
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
-import {Link} from "react-router-dom"
 
 import './Login.css'
 
@@ -63,8 +62,8 @@ export default function Login() {
           <div className="text-register text-center pt-3">
               Don't have an account? Sign up.
           </div>
-            <Button className="btn btn-success btn-block mt-3 mb-3">
-              <Link to="/register">Register</Link>
+            <Button className="btn btn-success btn-block mt-3 mb-3" onClick={() => window.location='/register'}>
+              Register
             </Button>
         </Form>
       </div>
